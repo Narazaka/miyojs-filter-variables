@@ -1,0 +1,20 @@
+{
+	"name": "miyojs-filter-variables",
+	"version": "0.0.1",
+	"description": "variables - provides convenient serializable variables for Miyo",
+	"main": "variables.js",
+	"scripts": {
+		"test": "mocha"
+	},
+	"dependencies": {
+	},
+	"author": {
+		"name": "narazaka",
+		"url": "http://narazaka.net/"
+	},
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/Narazaka/miyojs-filter-variables.git"
+	}
+}
