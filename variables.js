@@ -18,8 +18,12 @@ MiyoFilters.variables_initialize = {
         fs = require('fs');
         path = require('path');
         file_path = path.join(process.cwd(), file);
-        json_str = fs.readFileSync(file_path, 'utf8');
-        return _this.variables = JSON.parse(json_str);
+        try {
+          json_str = fs.readFileSync(file_path, 'utf8');
+          return _this.variables = JSON.parse(json_str);
+        } catch (_error) {
+
+        }
       };
     })(this);
     this.variables_save = (function(_this) {

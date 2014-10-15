@@ -10,8 +10,11 @@ MiyoFilters.variables_initialize = type: 'through', filter: (argument, request, 
 		fs = require 'fs'
 		path = require 'path'
 		file_path = path.join process.cwd(), file
-		json_str = fs.readFileSync file_path, 'utf8'
-		@variables = JSON.parse json_str
+		try
+			json_str = fs.readFileSync file_path, 'utf8'
+			@variables = JSON.parse json_str
+		catch
+			return
 	@variables_save = (file) =>
 		fs = require 'fs'
 		path = require 'path'
