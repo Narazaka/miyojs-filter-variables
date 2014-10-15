@@ -3,7 +3,7 @@
 unless MiyoFilters?
 	MiyoFilters = {}
 
-MiyoFilters.variables_initialize = (argument, request, id) ->
+MiyoFilters.variables_initialize = type: 'through', filter: (argument, request, id) ->
 	@variables = {}
 	@variables_temporary = {}
 	@variables_load = (file) =>
@@ -23,11 +23,15 @@ MiyoFilters.variables_initialize = (argument, request, id) ->
 		@filters.miyo_template_stash.vt = (value, request, id) -> @variables_temporary
 	argument
 
-MiyoFilters.variables_load = (argument, request, id) ->
+MiyoFilters.variables_load = type: 'through', filter: (argument, request, id) ->
+	unless argument?.variables_load?
+		throw 'argument.variables_load undefined'
 	@variables_load argument.variables_load
 	argument
 
-MiyoFilters.variables_save = (argument, request, id) ->
+MiyoFilters.variables_save = type: 'through', filter: (argument, request, id) ->
+	unless argument?.variables_save?
+		throw 'argument.variables_save undefined'
 	@variables_save argument.variables_save
 	argument
 
