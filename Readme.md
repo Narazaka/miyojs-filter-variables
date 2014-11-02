@@ -36,10 +36,33 @@ ghost/masterをカレントディレクトリとして同様に
 
 変数を保存します。
 
+### variables_set
+
+変数をセットします。
+
+### variables_delete
+
+変数を削除します。
+
+### variables_temporary_set
+
+一時変数をセットします。
+
+### variables_temporary_delete
+
+一時変数を削除します。
+
 依存
 ----------------------------------------
 
-このフィルタが依存するものはありません。
+このフィルタのうち一部(variables_set, variables_temporary_set)は以下に依存します。
+
+- [miyojs-filter-property](https://github.com/Narazaka/miyojs-filter-property.git)
+
+propertyを読み込んだ上でproperty_initializeを一回実行した後で利用できます。
+
+    _load:
+    	filters: [..., property_initialize, ...]
 
 使用方法
 ----------------------------------------
@@ -75,7 +98,10 @@ variables_temporaryは単なるオブジェクトで、連想配列のように�
 
 variables_temporaryは保存、復帰を前提としない実行時変数を保存する目的で使用します。
 
-# variables_save
+メソッド・フィルタ
+----------------------------------------
+
+### variables_save
 
 Miyoのインスタンスにvariables_saveメソッドが追加されます。
 
@@ -90,7 +116,7 @@ variables_saveはファイル名を引数に取り、そのファイルへ変数
     	argument:
     		variables_save: ./variables.save
 
-# variables_load
+### variables_load
 
 Miyoのインスタンスにvariables_loadメソッドが追加されます。
 
@@ -106,3 +132,39 @@ variables_saveでセーブされたファイルを扱えます。
     	filters: [variables_load]
     	argument:
     		variables_load: ./variables.save
+
+### variables_set
+
+フィルタから変数を設定できます。
+
+variables_setは指定された名前の変数をvariablesに設定します。
+
+propertyフィルタの機能によりコードも設定できます。
+
+    OnSet:
+    	filters: [variables_set]
+    	argument:
+    		variables_set:
+    			foo: foobar
+    			hoge.jse: 1 + 1
+
+### variables_delete
+
+フィルタから変数を削除できます。
+
+variables_deleteは指定された名前の変数をvariablesから削除します。
+
+    OnDelete:
+    	filters: [variables_delete]
+    	argument:
+    		variables_delete:
+    			- foo
+    			- hoge
+
+### variables_temporary_set
+
+variables_setのvariables_temporary版です。
+
+### variables_temporary_delete
+
+variables_deleteのvariables_temporary版です。

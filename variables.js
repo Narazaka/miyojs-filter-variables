@@ -9,7 +9,7 @@ if (typeof MiyoFilters === "undefined" || MiyoFilters === null) {
 
 MiyoFilters.variables_initialize = {
   type: 'through',
-  filter: function(argument, request, id) {
+  filter: function(argument, request, id, stash) {
     this.variables = {};
     this.variables_temporary = {};
     this.variables_load = (function(_this) {
@@ -50,7 +50,7 @@ MiyoFilters.variables_initialize = {
 
 MiyoFilters.variables_load = {
   type: 'through',
-  filter: function(argument, request, id) {
+  filter: function(argument, request, id, stash) {
     if ((argument != null ? argument.variables_load : void 0) == null) {
       throw 'argument.variables_load undefined';
     }
@@ -61,11 +61,75 @@ MiyoFilters.variables_load = {
 
 MiyoFilters.variables_save = {
   type: 'through',
-  filter: function(argument, request, id) {
+  filter: function(argument, request, id, stash) {
     if ((argument != null ? argument.variables_save : void 0) == null) {
       throw 'argument.variables_save undefined';
     }
     this.variables_save(argument.variables_save);
+    return argument;
+  }
+};
+
+MiyoFilters.variables_set = {
+  type: 'through',
+  filter: function(argument, request, id, stash) {
+    var name, pname;
+    if ((argument != null ? argument.variables_set : void 0) == null) {
+      throw 'argument.variables_set undefined';
+    }
+    for (name in argument.variables_set) {
+      pname = name.replace(/\.[^.]+$/);
+      this.variables[name] = this.property(argument.variables_set, pname, request, id, stash);
+    }
+    return argument;
+  }
+};
+
+MiyoFilters.variables_delete = {
+  type: 'through',
+  filter: function(argument, request, id, stash) {
+    var name, _i, _len, _ref;
+    if ((argument != null ? argument.variables_delete : void 0) == null) {
+      throw 'argument.variables_delete undefined';
+    }
+    _ref = argument.variables_delete;
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      name = _ref[_i];
+      delete this.variables[name];
+    }
+    return argument;
+  }
+};
+
+MiyoFilters.variables_temporary_set = {
+  type: 'through',
+  filter: function(argument, request, id, stash) {
+    var name, pname, value, _ref;
+    if ((argument != null ? argument.variables_temporary_set : void 0) == null) {
+      throw 'argument.variables_temporary_set undefined';
+    }
+    _ref = argument.variables_temporary_set;
+    for (name in _ref) {
+      value = _ref[name];
+      pname = name.replace(/\.[^.]+$/);
+      this.variables_temporary[name] = this.property(argument.variables_temporary_set, pname, request, id, stash);
+    }
+    return argument;
+  }
+};
+
+MiyoFilters.variables_temporary_delete = {
+  type: 'through',
+  filter: function(argument, request, id, stash) {
+    var name, _i, _len, _ref;
+    if ((argument != null ? argument.variables_temporary_delete : void 0) == null) {
+      throw 'argument.variables_temporary_delete undefined';
+    }
+    _ref = argument.variables_temporary_delete;
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      name = _ref[_i];
+      delete this.variables_temporary[name];
+    }
     return argument;
   }
 };
