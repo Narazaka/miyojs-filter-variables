@@ -1,6 +1,6 @@
 {
 	"name": "miyojs-filter-variables",
-	"version": "1.1.0",
+	"version": "2.0.0",
 	"description": "variables - provides convenient serializable variables for Miyo",
 	"keywords": ["miyojs", "miyojs-filter"],
 	"main": "variables.js",
@@ -8,15 +8,17 @@
 		"test": "mocha"
 	},
 	"dependencies": {
+		"es6-promise": "^2.0.0"
 	},
 	"devDependencies": {
 		"coffee-script": ">= 1.8.0",
 		"mocha": ">= 1.20.1",
 		"chai": ">= 1.9.2",
+		"chai-as-promised": ">= 4.1.1",
 		"sinon": ">= 1.10.3",
 		"istanbul": ">= 0.3.2",
-		"miyojs": ">= 1.0.3",
-		"miyojs-filter-property": ">= 1.0.0"
+		"miyojs": ">= 2.0.2",
+		"miyojs-filter-property": ">= 1.2.0"
 	},
 	"author": {
 		"name": "narazaka",
